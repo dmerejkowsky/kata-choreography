@@ -3,6 +3,8 @@ package fr.arolla;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class OrchestratorTests {
@@ -10,6 +12,9 @@ public class OrchestratorTests {
   private Ticketing ticketing;
   private Booking booking;
   private Inventory inventory;
+
+  private Notifier notifier;
+
   private Orchestrator orchestrator;
 
   @BeforeEach
@@ -17,14 +22,20 @@ public class OrchestratorTests {
     this.ticketing = new Ticketing();
     this.inventory = new Inventory(totalSeats);
     this.booking = new Booking();
-    this.orchestrator = new Orchestrator(booking, inventory, ticketing);
+    this.notifier = new Notifier();
+    this.orchestrator = new Orchestrator(booking, inventory, ticketing, notifier);
   }
 
   @Test
-  void whenBookingTicketsInventoryIsUpdatedAndTicketsArePrinted() {
-    orchestrator.orchestrate(4);
+  void whenBookingTicketsInventoryIsUpdatedTicketsArePrintedAndUserIsNotified() {
+    var request = new BookingRequest(4, "Alex");
+
+    orchestrator.orchestrate(request);
+
     assertEquals(4, booking.lastBookingRequest());
     assertEquals(96, inventory.getCapacity());
     assertEquals("Ticket for 4 seats", ticketing.getLastTicket());
+    assertEquals(List.of("Your tickets are ready"), notifier.messagesFor("Alex"));
+
   }
 }

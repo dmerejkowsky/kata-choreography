@@ -7,7 +7,9 @@ public class App {
     var ticketing = new Ticketing();
     var totalSeats = 100;
     var inventory = new Inventory(totalSeats);
-    var orchestrator = new Orchestrator(booking, inventory, ticketing);
-    orchestrator.orchestrate(4);
+    var notifier = new Notifier();
+    var orchestrator = new Orchestrator(booking, inventory, ticketing, notifier);
+    var request = new BookingRequest(4, "Alex");
+    orchestrator.orchestrate(request);
   }
 }
