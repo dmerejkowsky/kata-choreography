@@ -36,6 +36,17 @@ public class OrchestratorTests {
     assertEquals(96, inventory.getCapacity());
     assertEquals("Ticket for 4 seats", ticketing.getLastTicket());
     assertEquals(List.of("Your tickets are ready"), notifier.messagesFor("Alex"));
+  }
+
+  @Test
+  void whenOverBookedUserIsNotified() {
+    var request = new BookingRequest(103, "Alex");
+
+    orchestrator.orchestrate(request);
+
+    assertEquals(103, booking.lastBookingRequest());
+    assertEquals(100, inventory.getCapacity());
+    assertEquals(List.of("Event is at full capacity"), notifier.messagesFor("Alex"));
 
   }
 }

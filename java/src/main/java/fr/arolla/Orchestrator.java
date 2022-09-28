@@ -19,8 +19,12 @@ public class Orchestrator {
     String user = request.user();
 
     booking.book(numSeats);
-    inventory.decrementCapacity(numSeats);
-    ticketing.printTicket(numSeats);
-    notifier.notifyUser(user, "Your tickets are ready");
+    try {
+      inventory.decrementCapacity(numSeats);
+      ticketing.printTicket(numSeats);
+      notifier.notifyUser(user, "Your tickets are ready");
+    } catch (OverBookedException e) {
+      notifier.notifyUser(user, "Event is at full capacity");
+    }
   }
 }
