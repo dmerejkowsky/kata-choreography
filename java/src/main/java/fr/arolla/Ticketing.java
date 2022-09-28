@@ -12,7 +12,6 @@ public class Ticketing implements Listener {
   public void printTicket(int numSeats) {
     System.out.format("Printing ticket for %d seats\n", numSeats);
     numberOfSeatsInLastPrint = numSeats;
-    bus.emit(new TicketPrinted(numSeats));
   }
 
   public String getLastTicket() {
@@ -22,7 +21,10 @@ public class Ticketing implements Listener {
   @Override
   public void onMessage(Object message) {
     if (message instanceof CapacityUpdated capacityUpdated) {
-      printTicket(capacityUpdated.booked());
+      int numSeats = capacityUpdated.booked();
+      var user = capacityUpdated.user();
+      printTicket(numSeats);
+      bus.emit(new TicketPrinted(numSeats, user));
     }
   }
 }

@@ -8,6 +8,6 @@ public class App {
     var ticketing = new Ticketing(bus);
     var totalSeats = 100;
     var inventory = new Inventory(bus, totalSeats);
-    booking.book(4);
+    booking.book(new BookingRequest(4, "Alex"));
   }
 }

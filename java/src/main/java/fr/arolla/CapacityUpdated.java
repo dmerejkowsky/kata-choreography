@@ -1,4 +1,4 @@
 package fr.arolla;
 
-public record CapacityUpdated(int available, int booked) {
+public record CapacityUpdated(int available, int booked, String user) {
 }

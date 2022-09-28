@@ -18,7 +18,6 @@ public class Inventory implements Listener {
 
     capacity -= numSeats;
     System.out.format("Capacity now at %d\n", capacity);
-    bus.emit(new CapacityUpdated(capacity, numSeats));
   }
 
   public int getCapacity() {
@@ -29,6 +28,7 @@ public class Inventory implements Listener {
   public void onMessage(Object message) {
     if (message instanceof BookingRequested br) {
       decrementCapacity(br.numSeats());
+      bus.emit(new CapacityUpdated(capacity, br.numSeats(), br.user()));
     }
   }
 }

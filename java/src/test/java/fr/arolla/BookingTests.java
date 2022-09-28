@@ -18,11 +18,13 @@ public class BookingTests {
     var booking = new Booking(bus);
     var spy = new Spy();
     bus.subscribe(spy);
-    booking.book(4);
+    var request = new BookingRequest(4, "Alex");
+    booking.book(request);
 
     var lastMessage = spy.lastMessage();
-    var bookRequest = (BookingRequested) lastMessage;
-    assertEquals(4, bookRequest.numSeats());
+    var bookingRequested = (BookingRequested) lastMessage;
+    assertEquals(4, bookingRequested.numSeats());
+    assertEquals("Alex", bookingRequested.user());
 
   }
 }

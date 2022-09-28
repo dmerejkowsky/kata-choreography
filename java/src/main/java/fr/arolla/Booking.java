@@ -8,10 +8,12 @@ public class Booking {
     this.bus = bus;
   }
 
-  public void book(int numSeats) {
+  public void book(BookingRequest request) {
+    int numSeats = request.numSeats();
+    String user = request.user();
     this.numSeats = numSeats;
     System.out.format("Booking %d seats\n", numSeats);
-    bus.emit(new BookingRequested(numSeats));
+    bus.emit(new BookingRequested(numSeats, user));
   }
 
   public int lastBookingRequest() {
