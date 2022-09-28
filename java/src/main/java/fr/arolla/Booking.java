@@ -6,7 +6,7 @@ public class Booking {
 
   public void book(int numSeats) {
     this.numSeats = numSeats;
-    System.out.format("Booking %d seats", numSeats);
+    System.out.format("Booking %d seats\n", numSeats);
   }
 
   public int lastBookingRequest() {
