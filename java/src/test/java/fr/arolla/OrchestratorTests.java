@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class OrchestratorTests {
   private final int totalSeats = 100;
+  private EventBus bus;
   private Ticketing ticketing;
   private Booking booking;
   private Inventory inventory;
@@ -14,9 +15,10 @@ public class OrchestratorTests {
 
   @BeforeEach
   void setUp() {
-    this.ticketing = new Ticketing();
-    this.inventory = new Inventory(totalSeats);
-    this.booking = new Booking();
+    bus = new EventBus();
+    this.ticketing = new Ticketing(bus);
+    this.inventory = new Inventory(bus, totalSeats);
+    this.booking = new Booking(bus);
     this.orchestrator = new Orchestrator(booking, inventory, ticketing);
   }
 

@@ -3,11 +3,11 @@ package fr.arolla;
 
 public class App {
   public static void main(String[] args) {
-    var booking = new Booking();
-    var ticketing = new Ticketing();
+    var bus = new EventBus();
+    var booking = new Booking(bus);
+    var ticketing = new Ticketing(bus);
     var totalSeats = 100;
-    var inventory = new Inventory(totalSeats);
-    var orchestrator = new Orchestrator(booking, inventory, ticketing);
-    orchestrator.orchestrate(4);
+    var inventory = new Inventory(bus, totalSeats);
+    booking.book(4);
   }
 }
