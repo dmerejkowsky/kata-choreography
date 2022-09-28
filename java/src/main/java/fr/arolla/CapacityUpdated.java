@@ -1,4 +1,4 @@
 package fr.arolla;
 
-public record CapacityUpdated(int seats) {
+public record CapacityUpdated(int available, int booked) {
 }

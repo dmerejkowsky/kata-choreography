@@ -1,11 +1,12 @@
 package fr.arolla;
 
-public class Ticketing {
+public class Ticketing implements Listener {
   private final EventBus bus;
-  private int numberOfSeatsInLastPrint;
+  private Integer numberOfSeatsInLastPrint;
 
   public Ticketing(EventBus bus) {
     this.bus = bus;
+    bus.subscribe(this);
   }
 
   public void printTicket(int numSeats) {
@@ -18,4 +19,10 @@ public class Ticketing {
     return String.format("Ticket for %d seats", numberOfSeatsInLastPrint);
   }
 
+  @Override
+  public void onMessage(Object message) {
+    if (message instanceof CapacityUpdated capacityUpdated) {
+      printTicket(capacityUpdated.booked());
+    }
+  }
 }

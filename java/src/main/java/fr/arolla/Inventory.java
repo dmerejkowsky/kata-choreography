@@ -1,11 +1,12 @@
 package fr.arolla;
 
-public class Inventory {
+public class Inventory implements Listener {
   private final EventBus bus;
   private int capacity;
 
   public Inventory(EventBus bus, int totalSeats) {
     this.bus = bus;
+    this.bus.subscribe(this);
     capacity = totalSeats;
   }
 
@@ -17,10 +18,17 @@ public class Inventory {
 
     capacity -= numSeats;
     System.out.format("Capacity now at %d\n", capacity);
-    bus.emit(new CapacityUpdated(capacity));
+    bus.emit(new CapacityUpdated(capacity, numSeats));
   }
 
   public int getCapacity() {
     return capacity;
+  }
+
+  @Override
+  public void onMessage(Object message) {
+    if (message instanceof BookingRequested br) {
+      decrementCapacity(br.numSeats());
+    }
   }
 }

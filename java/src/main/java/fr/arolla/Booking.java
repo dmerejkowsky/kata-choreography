@@ -11,7 +11,7 @@ public class Booking {
   public void book(int numSeats) {
     this.numSeats = numSeats;
     System.out.format("Booking %d seats\n", numSeats);
-    bus.emit(new BookRequest(numSeats));
+    bus.emit(new BookingRequested(numSeats));
   }
 
   public int lastBookingRequest() {

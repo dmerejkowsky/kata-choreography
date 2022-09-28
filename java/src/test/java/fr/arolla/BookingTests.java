@@ -21,7 +21,7 @@ public class BookingTests {
     booking.book(4);
 
     var lastMessage = spy.lastMessage();
-    var bookRequest = (BookRequest) lastMessage;
+    var bookRequest = (BookingRequested) lastMessage;
     assertEquals(4, bookRequest.numSeats());
 
   }

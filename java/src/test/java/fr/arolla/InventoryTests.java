@@ -29,7 +29,8 @@ public class InventoryTests {
     assertEquals(90, inventory.getCapacity());
 
     CapacityUpdated capacityUpdated = (CapacityUpdated) spy.lastMessage();
-    assertEquals(90, capacityUpdated.seats());
+    assertEquals(90, capacityUpdated.available());
+    assertEquals(10, capacityUpdated.booked());
   }
 
   @Test
