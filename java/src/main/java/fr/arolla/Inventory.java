@@ -12,7 +12,6 @@ public class Inventory implements Listener {
 
   public void decrementCapacity(int numSeats) {
     if (numSeats > capacity) {
-      bus.emit(new CapacityExceeded());
       throw new OverBookedException();
     }
 
@@ -26,9 +25,15 @@ public class Inventory implements Listener {
 
   @Override
   public void onMessage(Object message) {
-    if (message instanceof BookingRequested br) {
-      decrementCapacity(br.numSeats());
-      bus.emit(new CapacityUpdated(capacity, br.numSeats(), br.user()));
+    if (message instanceof BookingRequested bookingRequested) {
+      var numSeats = bookingRequested.numSeats();
+      var user = bookingRequested.user();
+      try {
+        decrementCapacity(numSeats);
+        bus.emit(new CapacityUpdated(capacity, numSeats, user));
+      } catch (OverBookedException e) {
+        bus.emit(new CapacityExceeded(user));
+      }
     }
   }
 }

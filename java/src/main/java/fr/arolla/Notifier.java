@@ -33,5 +33,10 @@ public class Notifier implements Listener {
       var user = ticketPrinted.user();
       notifyUser(user, "Your tickets have been printed");
     }
+
+    if (message instanceof CapacityExceeded capacityExceeded) {
+      var user = capacityExceeded.user();
+      notifyUser(user, "Event is fully booked");
+    }
   }
 }

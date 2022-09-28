@@ -1,4 +1,4 @@
 package fr.arolla;
 
-public record CapacityExceeded() {
+public record CapacityExceeded(String user) {
 }

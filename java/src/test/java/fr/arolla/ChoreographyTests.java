@@ -35,4 +35,12 @@ public class ChoreographyTests {
     assertEquals(List.of("Your tickets have been printed"), notifier.messagesFor("Alex"));
   }
 
+  @Test
+  void userIsNotifiedWhenEventIsOverbooked() {
+    var bookingRequest = new BookingRequest(103, "Alex");
+    booking.book(bookingRequest);
+    assertEquals(100, inventory.getCapacity());
+    assertEquals(List.of("Event is fully booked"), notifier.messagesFor("Alex"));
+  }
+
 }

@@ -35,7 +35,5 @@ public class InventoryTests {
     var inventory = new Inventory(bus, totalSeats);
 
     assertThrows(OverBookedException.class, () -> inventory.decrementCapacity(14));
-
-    CapacityExceeded message = (CapacityExceeded) spy.lastMessage();
   }
 }
