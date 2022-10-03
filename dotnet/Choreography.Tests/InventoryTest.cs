@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using System.Net.Http.Headers;
+using Xunit;
 
 
 namespace Choreography.Test
@@ -10,6 +11,8 @@ namespace Choreography.Test
         public InventoryTest()
         {
             logger = new SpyLogger();
+            var context = new Context(logger, bus);
+            var bus = new EventBus()
             inventory = new Inventory(logger, 100);
         }
 

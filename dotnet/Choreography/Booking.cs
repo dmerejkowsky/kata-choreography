@@ -2,16 +2,16 @@ using System;
 namespace Choreography {
 
     public class Booking {
-        private readonly ILogger logger;
+        private readonly Context context;
 
-        public Booking(ILogger logger)
+        public Booking(Context context)
         {
-            this.logger = logger;
+            this.context = context;
         }
 
         public void Book(int numSeats)
         {
-            logger.Log($"Booking {numSeats} seats");
+            context.Logger().Log($"Booking {numSeats} seats");
         }
     }
 }

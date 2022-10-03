@@ -4,13 +4,13 @@ namespace Choreography
 {
     public class Inventory
     {
-        private readonly ILogger logger;
+        private readonly Context context;
         private int capacity;
 
 
-        public Inventory(ILogger logger, int totalSeats)
+        public Inventory(Context context, int totalSeats)
         {
-            this.logger = logger;
+            this.context = context;
             capacity = totalSeats;
         }
 
@@ -27,7 +27,7 @@ namespace Choreography
             }
 
             capacity -= numSeats;
-            logger.Log($"Capacity is now at {capacity}");
+            context.Logger().Log($"Capacity is now at {capacity}");
         }
     }
 }

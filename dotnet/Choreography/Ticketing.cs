@@ -4,16 +4,16 @@ namespace Choreography
 {
     public class Ticketing
     {
-        private readonly ILogger logger;
+        private readonly Context context;
 
-        public Ticketing(ILogger logger)
+        public Ticketing(Context context)
         {
-            this.logger = logger;
+            this.context = context;
         }
 
         public void PrintTickets(int numSeats)
         {
-            logger.Log($"Printing tickets for {numSeats} seats");
+            context.Logger().Log($"Printing tickets for {numSeats} seats");
         }
     }
 }
