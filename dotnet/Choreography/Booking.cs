@@ -9,14 +9,9 @@ namespace Choreography {
             this.logger = logger;
         }
 
-        public void Book(int numSeats) {
-            int totalSeats = 100;
+        public void Book(int numSeats)
+        {
             logger.Log($"Booking {numSeats} seats");
-            var inventory = new Inventory(logger, totalSeats);
-            inventory.DecrementCapacity(numSeats);
-            var ticketing = new Ticketing(logger);
-            ticketing.PrintTickets(numSeats);
         }
-
     }
 }
