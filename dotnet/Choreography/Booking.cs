@@ -1,5 +1,5 @@
 using System;
-namespace DotnetStarter.Logic {
+namespace Choreography {
     public class Booking {
         public void Book(int numSeats) {
             Console.WriteLine($"Booking {numSeats} seats");

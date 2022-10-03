@@ -1,6 +1,7 @@
 using Xunit;
+using Choreography;
 
-namespace DotnetStarter.Logic.Tests
+namespace Choreography.Tests
 {
     public class BookingTest
     {
