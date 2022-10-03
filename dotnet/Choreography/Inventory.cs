@@ -24,6 +24,7 @@ namespace Choreography
             }
 
             capacity -= numSeats;
+            Console.WriteLine($"Capacity is now at {capacity}");
         }
     }
 }
