@@ -20,7 +20,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Choreography\Choreograhpy.csproj" />
+      <ProjectReference Include="..\Choreography\Choreography.csproj" />
     </ItemGroup>
 
 </Project>

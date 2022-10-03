@@ -1,25 +1,32 @@
-﻿using Xunit;
+﻿using Choreography.Tests;
+using Xunit;
 
 
 namespace Choreography.Test
 {
     public class InventoryTest
     {
+        private readonly SpyLogger logger;
+        private readonly Inventory inventory;
+        public InventoryTest()
+        {
+            logger = new SpyLogger();
+            inventory = new Inventory(logger, 100);
+        }
+
         [Fact]
         public void UpdateCapacityWhenEnoughFreeSeats()
         {
-
-            var inventory = new Inventory(100);
             inventory.DecrementCapacity(10);
 
             var newCapacity = inventory.CurrentCapacity();
+            Assert.Equal(90, newCapacity);
         }
 
         [Fact]
         public void ThrowWhenOverBooked()
         {
-            var inventory = new Inventory(10);
-            Assert.Throws<OverbookedException>(() => inventory.DecrementCapacity(12));
+            Assert.Throws<OverbookedException>(() => inventory.DecrementCapacity(120));
         }
     }
 }

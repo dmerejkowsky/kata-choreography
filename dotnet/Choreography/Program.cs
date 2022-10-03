@@ -4,7 +4,8 @@
     {
         public static void Main()
         {
-            var booking = new Booking();
+            var logger = new ConsoleLogger();
+            var booking = new Booking(logger);
             booking.Book(4);
         }
     }
