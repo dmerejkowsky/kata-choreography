@@ -1,5 +1,4 @@
-﻿using Choreography.Tests;
-using Xunit;
+﻿using Xunit;
 
 
 namespace Choreography.Test

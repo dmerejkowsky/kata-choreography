@@ -2,7 +2,7 @@ using Xunit;
 using System;
 using System.Collections.Generic;
 
-namespace Choreography.Tests
+namespace Choreography.Test
 {
     public class BookingTest
     {

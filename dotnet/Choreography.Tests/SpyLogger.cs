@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Choreography.Tests
+namespace Choreography.Test
 {
     public class SpyLogger : ILogger
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using Xunit;
 
-namespace Choreography.Tests
+namespace Choreography.Test
 {
     public class OrchestratorTest
     {
