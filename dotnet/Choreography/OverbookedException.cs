@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Choreograhpy
+namespace Choreography
 {
     public class OverbookedException  : Exception
     {

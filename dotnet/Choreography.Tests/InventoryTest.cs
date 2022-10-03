@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Xunit;
 
 
-namespace Choreograhpy.Test
+namespace Choreography.Test
 {
     public class InventoryTest
     {
