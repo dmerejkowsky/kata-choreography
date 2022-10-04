@@ -7,23 +7,26 @@ namespace Choreography.Test
 {
     public class OrchestratorTest
     {
-        private readonly SpyLogger logger;
-        private readonly Orchestrator orchestrator;
+        private readonly SpyLogger _logger;
+        private readonly Context _context;
+        private readonly Orchestrator _orchestrator;
         public OrchestratorTest() {
-            logger = new SpyLogger();
+            _logger = new SpyLogger();
+            var bus = new EventBus();
+            _context = new Context(_logger, bus);
             var totalSeats = 100;
-            var inventory = new Inventory(logger, totalSeats);
-            var booking = new Booking(logger);
-            var ticketing = new Ticketing(logger);
-            orchestrator = new Orchestrator(booking, inventory, ticketing);
+            var inventory = new Inventory(_context, totalSeats);
+            var booking = new Booking(_context);
+            var ticketing = new Ticketing(_context);
+            _orchestrator = new Orchestrator(booking, inventory, ticketing);
         }
 
         [Fact]
         public void CanBookWhenEnoughRoom()
         {
-            orchestrator.Book(4);
+            _orchestrator.Book(4);
 
-            var loggedMessages = logger.Messages();
+            var loggedMessages = _logger.Messages();
             var expected = new List<string> { "Booking 4 seats", "Capacity is now at 96", "Printing tickets for 4 seats" };
             Assert.Equal(expected, loggedMessages);
         }
@@ -31,7 +34,7 @@ namespace Choreography.Test
         [Fact]
         public void DoNotPrintTicketsWhenNotEnoughRoom()
         {
-            Assert.Throws<OverbookedException>(() => orchestrator.Book(104));
+            Assert.Throws<OverbookedException>(() => _orchestrator.Book(104));
         }
     }
 }

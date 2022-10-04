@@ -8,12 +8,13 @@ namespace Choreography.Test
     {
         private readonly SpyLogger logger;
         private readonly Inventory inventory;
+        private readonly Context context;
         public InventoryTest()
         {
             logger = new SpyLogger();
-            var context = new Context(logger, bus);
-            var bus = new EventBus()
-            inventory = new Inventory(logger, 100);
+            var bus = new EventBus();
+            context = new Context(logger, bus);
+            inventory = new Inventory(context, 100);
         }
 
         [Fact]
