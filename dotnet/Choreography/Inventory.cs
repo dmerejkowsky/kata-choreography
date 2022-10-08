@@ -1,33 +1,53 @@
-﻿using System;
+﻿using Choreography.Events;
 
-namespace Choreography
+namespace Choreography;
+
+public class Inventory : ISubscriber
 {
-    public class Inventory
+    private readonly Context _context;
+    private int _capacity;
+
+
+    public Inventory(Context context, int totalSeats)
     {
-        private readonly Context context;
-        private int capacity;
+        _capacity = totalSeats;
+        _context = context;
+        _context.Bus().Subscribe(this);
+    }
 
-
-        public Inventory(Context context, int totalSeats)
+    public void OnEvent(IEvent e)
+    {
+        var bus = _context.Bus();
+        if (e is BookingRequested bookingRequested)
         {
-            this.context = context;
-            capacity = totalSeats;
-        }
-
-        public int CurrentCapacity()
-        {
-            return capacity;
-        }
-
-        public void DecrementCapacity(int numSeats)
-        {
-            if (numSeats > capacity)
+            var numSeats = bookingRequested.NumSeats;
+            try
             {
-                throw new OverbookedException();
-            }
+                DecrementCapacity(numSeats);
 
-            capacity -= numSeats;
-            context.Logger().Log($"Capacity is now at {capacity}");
+                bus.Emit(new CapacityUpdated(_capacity, numSeats));
+            }
+            catch (OverbookedException)
+            {
+                bus.Emit(new OverBooked());
+            }
         }
+    }
+
+    public int CurrentCapacity()
+    {
+        return _capacity;
+    }
+
+    public void DecrementCapacity(int numSeats)
+    {
+        if (numSeats > _capacity)
+        {
+            _context.Logger().Log("OverBooked");
+            throw new OverbookedException();
+        }
+
+        _capacity -= numSeats;
+        _context.Logger().Log($"Capacity is now at {_capacity}");
     }
 }

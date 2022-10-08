@@ -1,17 +1,19 @@
-using System;
-namespace Choreography {
+using Choreography.Events;
 
-    public class Booking {
-        private readonly Context context;
+namespace Choreography;
 
-        public Booking(Context context)
-        {
-            this.context = context;
-        }
+public class Booking
+{
+    private readonly Context _context;
 
-        public void Book(int numSeats)
-        {
-            context.Logger().Log($"Booking {numSeats} seats");
-        }
+    public Booking(Context context)
+    {
+        _context = context;
+    }
+
+    public void Book(int numSeats)
+    {
+        _context.Logger().Log($"Booking {numSeats} seats");
+        _context.Bus().Emit(new BookingRequested(numSeats));
     }
 }

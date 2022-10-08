@@ -1,24 +1,63 @@
-﻿using Xunit;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Choreography.Events;
+using Xunit;
 
-namespace Choreography.Test
+namespace Choreography.Test;
+
+public class TicketingTests
 {
-    public class TicketingTests
+    private readonly SpyLogger _spyLogger;
+    private readonly SpySubscriber _spySubscriber;
+    private readonly Ticketing _ticketing;
+
+    public TicketingTests()
     {
-        private readonly SpyLogger _logger;
-        private readonly Context _context;
+        _spyLogger = new SpyLogger();
+        var bus = new EventBus();
+        _spySubscriber = new SpySubscriber();
+        bus.Subscribe(_spySubscriber);
+        var context = new Context(_spyLogger, bus);
+        _ticketing = new Ticketing(context);
+    }
 
-        public TicketingTests()
-        {
-            _logger = new SpyLogger();
-            var bus = new EventBus();
-            _context = new Context(_logger, bus);
-        }
+    [Fact]
+    public void CanPrintTickets()
+    {
+        _ticketing.PrintTickets(4);
+    }
 
-        [Fact]  
-        public void CanPrintTickets()
-        {
-            var ticketing = new Ticketing(_context);
-            ticketing.PrintTickets(4);
-        }
+    [Fact]
+    public void LogsWhenPrintingTickets()
+    {
+        _ticketing.PrintTickets(3);
+
+        var messages = _spyLogger.Messages();
+        Assert.Equal(
+            new List<string> { "Printing tickets for 3 seats" },
+            messages
+        );
+    }
+
+    [Fact]
+    public void PrintTicketWhenReceivingCapacityUpdated()
+    {
+        _ticketing.OnEvent(new CapacityUpdated(97, 3));
+
+        var messages = _spyLogger.Messages();
+        Assert.Equal(
+            new List<string> { "Printing tickets for 3 seats" },
+            messages
+        );
+    }
+
+    [Fact]
+    public void EmitTicketPrintedWhenPrintingTickets()
+    {
+        _ticketing.PrintTickets(3);
+
+        var expected = new List<string> { "TicketPrinted()" };
+        var caughtEvents = _spySubscriber.CaughtEvents().Select(e => e.Display());
+        Assert.Equal(expected, caughtEvents);
     }
 }

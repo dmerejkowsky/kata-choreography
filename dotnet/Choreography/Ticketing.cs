@@ -1,19 +1,31 @@
-﻿using System;
+﻿using Choreography.Events;
 
-namespace Choreography
+namespace Choreography;
+
+public class Ticketing : ISubscriber
 {
-    public class Ticketing
+    private readonly Context _context;
+
+    public Ticketing(Context context)
     {
-        private readonly Context context;
+        _context = context;
+        var bus = _context.Bus();
+        bus.Subscribe(this);
+    }
 
-        public Ticketing(Context context)
-        {
-            this.context = context;
-        }
 
-        public void PrintTickets(int numSeats)
+    public void OnEvent(IEvent e)
+    {
+        if (e is CapacityUpdated capacityUpdated)
         {
-            context.Logger().Log($"Printing tickets for {numSeats} seats");
+            var numSeats = capacityUpdated.BookedSeats;
+            PrintTickets(numSeats);
         }
+    }
+
+    public void PrintTickets(int numSeats)
+    {
+        _context.Logger().Log($"Printing tickets for {numSeats} seats");
+        _context.Bus().Emit(new TicketPrinted());
     }
 }
