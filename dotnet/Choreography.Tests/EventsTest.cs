@@ -1,31 +1,30 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Xunit;
 using Choreography.Events;
+using Xunit;
 
-namespace Choreography.Test
+namespace Choreography.Test;
+
+public class EventsTest
 {
-    public class EventsTest
+    [Fact]
+    public void DummyEventWorksAsExpected()
     {
-        [Fact]
-        public void DummyEventWorksAsExpected()
-        {
-            var dummy = new DummyEvent(42);
-            Assert.Equal(42, dummy.Value);
-        }
+        var dummy = new DummyEvent(42);
+        Assert.Equal(42, dummy.Value);
+    }
 
-        [Fact]
-        public void SpySubscriberWorks()
-        {
-            var bus = new EventBus();
-            var spySubscriber = new SpySubscriber();
-            bus.Subscribe(spySubscriber);
+    [Fact]
+    public void SpySubscriberWorks()
+    {
+        var bus = new EventBus();
+        var spySubscriber = new SpySubscriber();
+        bus.Subscribe(spySubscriber);
 
-            bus.Emit(new DummyEvent(42));
+        bus.Emit(new DummyEvent(42));
 
-            var caughtEvents = spySubscriber.CaughtEvents().Select(e => e.Display());
-            var expected = new List<string> { "42" };
-            Assert.Equal(caughtEvents, expected);
-        }
+        var caughtEvents = spySubscriber.CaughtEvents().Select(e => e.Display());
+        var expected = new List<string> { "42" };
+        Assert.Equal(caughtEvents, expected);
     }
 }

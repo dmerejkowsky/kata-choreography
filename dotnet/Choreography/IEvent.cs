@@ -1,7 +1,6 @@
-﻿namespace Choreography.Events
+﻿namespace Choreography;
+
+public interface IEvent
 {
-    public interface IEvent
-    {
-        string Display();
-    }
+    string Display();
 }

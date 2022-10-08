@@ -1,8 +1,7 @@
 ﻿using System;
 
-namespace Choreography
+namespace Choreography;
+
+public class OverbookedException : Exception
 {
-    public class OverbookedException  : Exception
-    {
-    }
 }

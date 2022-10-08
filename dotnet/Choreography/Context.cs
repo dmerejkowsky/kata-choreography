@@ -1,17 +1,23 @@
-﻿namespace Choreography
+﻿namespace Choreography;
+
+public class Context
 {
-    public class Context
+    private readonly EventBus _bus;
+    private readonly ILogger _logger;
+
+    public Context(ILogger logger, EventBus bus)
     {
-        private readonly ILogger logger;
-        private readonly EventBus bus;
+        _logger = logger;
+        _bus = bus;
+    }
 
-        public Context(ILogger logger, EventBus bus)
-        {
-            this.logger = logger;
-            this.bus = bus;
-        }
+    public EventBus Bus()
+    {
+        return _bus;
+    }
 
-        public EventBus Bus() => bus;
-        public ILogger Logger() => logger;
+    public ILogger Logger()
+    {
+        return _logger;
     }
 }

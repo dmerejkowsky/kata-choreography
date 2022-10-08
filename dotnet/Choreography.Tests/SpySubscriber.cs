@@ -1,24 +1,23 @@
-﻿using Choreography.Events;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace Choreography.Test
+namespace Choreography.Test;
+
+internal class SpySubscriber : ISubscriber
 {
-    internal class SpySubscriber : ISubscriber
+    private readonly List<IEvent> _caughtEvents;
+
+    public SpySubscriber()
     {
-        private readonly List<IEvent> caughtEvents;
+        _caughtEvents = new List<IEvent>();
+    }
 
-        public SpySubscriber()
-        {
-            caughtEvents = new List<IEvent>();
-        }
+    public void OnEvent(IEvent e)
+    {
+        _caughtEvents.Add(e);
+    }
 
-        public void OnEvent(IEvent e)
-        {
-            caughtEvents.Add(e);
-        }
-
-        public List<IEvent> CaughtEvents() => caughtEvents;
-
+    public IEnumerable<IEvent> CaughtEvents()
+    {
+        return _caughtEvents;
     }
 }

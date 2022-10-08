@@ -1,9 +1,6 @@
-﻿using Choreography.Events;
+﻿namespace Choreography;
 
-namespace Choreography
+public interface ISubscriber
 {
-    public interface ISubscriber
-    {
-        void OnEvent(IEvent e);
-    }
+    void OnEvent(IEvent e);
 }

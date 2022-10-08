@@ -1,7 +1,6 @@
-﻿namespace Choreography
+﻿namespace Choreography;
+
+public interface ILogger
 {
-    public interface ILogger
-    {
-        void Log(string message);
-    }
+    void Log(string message);
 }

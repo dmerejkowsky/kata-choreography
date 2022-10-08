@@ -1,26 +1,24 @@
-﻿using Choreography.Events;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Choreography.Events;
 
-namespace Choreography
+namespace Choreography;
+
+public class EventBus
 {
+    private readonly List<ISubscriber> _subscribers;
 
-    public class EventBus
+    public EventBus()
     {
-        private readonly List<ISubscriber> subscribers;
+        _subscribers = new List<ISubscriber>();
+    }
 
-        public EventBus()
-        {
-            subscribers = new List<ISubscriber>();
-        }
+    public void Emit(IEvent e)
+    {
+        _subscribers.ForEach(s => s.OnEvent(e));
+    }
 
-        public void Emit(IEvent e)
-        {
-            subscribers.ForEach(s => s.OnEvent(e));
-        }
-
-        public void Subscribe(ISubscriber subscriber)
-        {
-            subscribers.Add(subscriber);
-        }
+    public void Subscribe(ISubscriber subscriber)
+    {
+        _subscribers.Add(subscriber);
     }
 }

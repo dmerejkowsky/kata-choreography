@@ -1,12 +1,12 @@
 ﻿using System;
-namespace Choreography
-{
-    internal class ConsoleLogger : ILogger
 
+namespace Choreography;
+
+internal class ConsoleLogger : ILogger
+
+{
+    public void Log(string message)
     {
-        public void Log(string message)
-        {
-            Console.WriteLine(message);
-        }
+        Console.WriteLine(message);
     }
 }
