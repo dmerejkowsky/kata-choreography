@@ -28,55 +28,57 @@ Let's consider a system to sell theater tickets online. It's made of:
 1. Now add the Notification service, then observe and comment the necessary changes when adding or suppressing new services.
 1. Compare both approaches, observe how the workflow logic is now fragmented into each service. Debrief: compare respective advantages and drawbacks of each apprach, and which constraints are necessary to follow the Open-Close principle.
 
+```java
+/**
+ * A basic event with a name and one single integer payload
+ */
+public class Event {
+  private final String name;
+  private final int payload;
+
+  public Event(String name, int payload) {
+    this.name = name;
+    this.payload = payload;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public int getPayload() {
+    return payload;
+  }
+}
+```
+
 
 ```java
 /** The listener interface */
 public interface Listener {
-  void onMessage(Object msg);
+  void onEvent(Event Event);
 }
 
 /**
- * A simple in-memory, observer-pattern-based single-threaded message bus for designing architecture and testing using unit tests before switching to using actual middleware
+ * A simple in-memory, observer-pattern-based single-threaded event
+ * bus for designing architecture before switching to using actual
+ * middleware
  */
-public class MessageBus {
-    private List<Listener> subs = new ArrayList<Listener>();
+public class EventBus {
+    private List<Listener> listeners = new ArrayList<Listener>();
 
-    public void subscribe(Listener l) {
-        this.subs.add(l);
+    public void subscribe(Listener listener) {
+        this.subscribers.add(listener);
     }
 
-    public void send(Object msg) {
-        for (Listener l : subs) {
-            l.onMessage(msg);
+    public void send(Event event) {
+        for (Listener listener : subscribers) {
+            subscriber.onEvent(event);
         }
     }
 }
 ```
 
-You may want to restrict the messages on the bus to be only events:
-
-```java
-/**
- * A basic event with a name and one single integer value
- */
-public class Event {
-  private final String name;
-  private final int value;
-
-  public Event(String name, int value) {
-    this.name = name;
-    this.value = value;
-  }
-
-  public String getName() {return name;}
-  public int getValue() {return value;}
-}
-```
-
-
 This kata covers the following aspects: **Event-Driven Architecture**, **Choreography over Orchestration** and **Smart Endpoints, Dumb Pipes**, which together form the microservices architectural style.
-
-
 
 
 ## Enoncé du problème (Francais)
@@ -102,6 +104,6 @@ Considérons un système de distributions de billets de spectacles en ligne. Le 
 1. Ajouter le service Notification, puis observer et commenter les changements nécessaires lors de l'ajout (ou la suppression) de nouveaux services.
 1. Comparer les deux approches, observer comment la logique du workflow est fragmentée dans chaque service. En débrief, donner les avantages et inconvénients respectifs de chaque approche, et quelles contraintes sont nécessaires pour respecter le principe Open-Close.
 
-Si vous le souhaitez, vous pouvez aussi n'envoyer que des messages de type événements métier.
+Si vous le souhaitez, vous pouvez aussi n'envoyer que des événements de type événements métier.
 
 Ce kata couvre les aspects **Event-Driven Architecture**, **Choreography over Orchestration** et **Smart Endpoints, Dumb Pipes**, qui ensemble font le style d'architecture microservices.
