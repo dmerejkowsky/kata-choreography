@@ -57,7 +57,9 @@ public class Event {
 public interface Listener {
   void onEvent(Event Event);
 }
+```
 
+```java
 /**
  * A simple in-memory, observer-pattern-based single-threaded event
  * bus for designing architecture before switching to using actual
