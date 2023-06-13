@@ -25,7 +25,7 @@ Let's consider a system to sell theater tickets online. It's made of:
 **Alternative Approach**
 
 1. Introduce your own EventBus as a simple alternative pattern (code sample below in Java) (BONUS: You may as well introduce the bus by progressively refactor your orchestrator). Then transform the services so that all the coordination is done through the bus, without the Notification service to start with.
-1. Now add the Notification service, then observe and comment the necessary changes when adding or suppressing new services. 
+1. Now add the Notification service, then observe and comment the necessary changes when adding or suppressing new services.
 1. Compare both approaches, observe how the workflow logic is now fragmented into each service. Debrief: compare respective advantages and drawbacks of each apprach, and which constraints are necessary to follow the Open-Close principle.
 
 
@@ -45,7 +45,7 @@ public class MessageBus {
         this.subs.add(l);
     }
 
-    public void send(Object msg) { 
+    public void send(Object msg) {
         for (Listener l : subs) {
             l.onMessage(msg);
         }
@@ -99,7 +99,7 @@ Considérons un système de distributions de billets de spectacles en ligne. Le 
 **Approche alternative**
 
 1. Introduire votre propre EventBus sous forme d'un simple pattern Observer (exemple de code dans la version anglaise), et transformer les services pour que toute la coordination se passe au travers du bus, sans le service Notification dans un premier temps.
-1. Ajouter le service Notification, puis observer et commenter les changements nécessaires lors de l'ajout (ou la suppression) de nouveaux services. 
+1. Ajouter le service Notification, puis observer et commenter les changements nécessaires lors de l'ajout (ou la suppression) de nouveaux services.
 1. Comparer les deux approches, observer comment la logique du workflow est fragmentée dans chaque service. En débrief, donner les avantages et inconvénients respectifs de chaque approche, et quelles contraintes sont nécessaires pour respecter le principe Open-Close.
 
 Si vous le souhaitez, vous pouvez aussi n'envoyer que des messages de type événements métier.
